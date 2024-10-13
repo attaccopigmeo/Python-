@@ -17,7 +17,7 @@ def Fibonacci(F):
 N1 = int(input("Введите нижнюю границу: "))
 N2 = int(input("Введите верхнюю границу: "))
 F = "0"
-f = open("./b.txt", "w")
+f = open("./b1.txt", "w")
 for i in range(N1, N2, 1):
     F = str(Fibonacci(i))
     f.write(F + "\n")
