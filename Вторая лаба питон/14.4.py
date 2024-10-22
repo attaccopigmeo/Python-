@@ -1,12 +1,17 @@
 # Даны натуральные числа n и k. Найти значение выражения: 1^k+2^k+3^k+...+n^k.\ 
 # Результат вывести в виде вещественного числа.
-n = int(input("Введите n: "))
-k = int(input("Введите k: "))
+print("Найти значение выражения: 1 ** k + 2 ** k + 3 ** k + ... + n ** k")
+n = int(input("Введите n (кол-во суммируемых): "))
+k = int(input("Введите k (степень): "))
 Sum = 0.0
-for i in range(n):
-    Sum += i ** k
+for i in range(1, n + 1):
+    a = 1
+    for _ in range(k):
+        a = a * i
+    Sum += a
 print("Сумма: ", Sum)
 # Тесты
-# input 2, 1 output 1.0
-# input 5, 6 output 4890.0
-# input 6, 3 output 225.0
+# input 2, 2 output 5.0
+# input 5, 6 output 20515.0
+# input 9, 1 output 45.0
+# через вложенный цикл, переделать

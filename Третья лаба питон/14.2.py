@@ -1,25 +1,25 @@
 # Найти среди всех N-значных натуральных чисел (1<N<7) палиндромы\
     # (палиндром - это число, которое одинаково читается слева направо и справа налево).\
-        # Ответ записать в файл c именем g.txt, располагая по одному числу в строке. Если таких чисел нет, то\
+        # Ответ записать в файл c именем e.txt, располагая по одному числу в строке. Если таких чисел нет, то\
             # результирующий файл должен быть создан, но пуст.
-N = int(input("Введите N: "))
-f = open("./g.txt", "w")
-if N % 2 == 0:
-    for x in range(10 ** (N // 2 - 1), 10 ** (N // 2)):
-        line = str(x)
-        y = x
-        while y > 0:
-            line += str(y % 10)
-            y = y // 10
-        f.write(line + "\n")
-else:
-    for x in range(10 ** (N // 2 - 1), 10 ** (N // 2)):
-        for z in range(10):
-            line = str(x) + str(z)
-            y = x
-            while y > 0:
-                line += str(y % 10)
-                y = y // 10
-            f.write(line + "\n")
-f.close()
-    
+def is_palindrome(N): # Определяем палиндром
+    n = N
+    rev = 0
+    while N > 0:
+        d = N % 10
+        rev = rev * 10 + d
+        N //=  10
+        if n == rev:
+            return n
+
+
+def find_n_digit_palindromes(): # Ищем n-значные полиндромы и записываем их
+    f = open("./e.txt", "w")
+    f.write("Найденные палиндромы:\n")
+    for i in range(10 ** (N - 1), 10 ** N):
+        if is_palindrome(i):
+            f.write(f"{i}\n")
+
+
+N = int(input("Введите N: "))            
+find_n_digit_palindromes()
