@@ -17,6 +17,7 @@ x = float(input("Введите x: "))
 for _ in range(6):
     e = float(input("Введите ε: "))
     print("Приближенное значение sin(x):", Sin1(x, e))
+    
 # Тесты
 # Введите x: 5
 # Введите ε: 1  

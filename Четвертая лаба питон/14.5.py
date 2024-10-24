@@ -31,6 +31,7 @@ for x in range(A, B + 1):
         cnt += 1
 if cnt == 0:
     print("No solution")
+
 # Тесты
 # Начало промежутка: 5
 # Конец промежутка: 100
