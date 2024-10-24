@@ -18,9 +18,20 @@ def prime_factors(n): # Ищем простые множители
 
 N = int(input("Введите число: "))
 factors = prime_factors(N)
+cur = 1
+cnt = 1
 while factors > 0:
-    print(str(factors % (N + 1)), end = " * " if factors > N else "\n")
+    fact = factors % (N + 1)
+    if cur == 1:
+        cur = fact
+    elif fact != cur:
+        print(str(cur), str(cnt), sep = " ** ", end = " * ")
+        cur = fact
+        cnt = 1
+    else:
+        cnt += 1
     factors //= (N + 1)
+print(str(cur), str(cnt), sep = " ** ")
 
 # Тесты
 # 15 = 3 * 5
