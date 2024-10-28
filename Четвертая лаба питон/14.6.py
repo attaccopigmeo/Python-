@@ -20,7 +20,7 @@ N = int(input("Введите число: "))
 factors = prime_factors(N)
 cur = 1
 cnt = 1
-while factors > 0:
+while factors > 0: # Цикл необходим для определения степеней
     fact = factors % (N + 1)
     if cur == 1:
         cur = fact
@@ -35,5 +35,5 @@ print(str(cur), str(cnt), sep = " ** ")
 
 # Тесты
 # 15 = 3 * 5
-# 200 = 2 ** * 5 ** 2
+# 200 = 5 ** 2 * 2 ** 3
 # 799 = 17 * 47
