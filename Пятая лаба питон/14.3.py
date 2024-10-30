@@ -1,25 +1,30 @@
 # Дано целое число N и набор из N целых чисел. Найти максимальное количество
 # подряд идущих минимальных элементов из данного набора.
+# ПЕРЕДЕЛЛАТЬ ЧЕРЕЗ РЕКУРСИВНУЮ ФУНКЦИЮ
+def max_of_min_numbers_in_set(N):
+    minimal = 1e10
+    cnt = 0
+    ans = 0
+    for _ in range(N): # Вводим числа из N и перебираем их на предмет удвл. условиям
+       x = int(input("Введите число: "))
+       if x == minimal:
+            cnt += 1
+       else:
+            if cnt > ans:
+                ans = cnt
+            if x < minimal:
+                minimal = x
+                ans = 0
+                cnt = 1
+            else:
+                cnt = 0
+    if cnt > ans:
+        ans = cnt
+        return ans
+
+
 N = int(input("Введите, сколько чисел вы ходите задать: "))
-minimal = 1e10
-cnt = 0
-ans = 0
-for _ in range(N): # Вводим числа из N и перебираем их на предмет удвл. условиям
-    x = int(input("Введите число: "))
-    if x == minimal:
-        cnt += 1
-    else:
-        if cnt > ans:
-            ans = cnt
-        if x < minimal:
-            minimal = x
-            ans = 0
-            cnt = 1
-        else:
-            cnt = 0
-if cnt > ans:
-    ans = cnt
-print("Максимальное кол-во мин. эл., идущих подряд: ", ans)
+print("Максимальное кол-во мин. эл., идущих подряд: ", max_of_min_numbers_in_set(N))
 # Однопроходной алгоритм считывает свои входные данные один раз, путем обработки элементов по порядку
 # Введите, сколько чисел вы ходите задать: 5
 # Введите число: 1
