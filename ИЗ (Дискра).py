@@ -34,3 +34,29 @@ res3 = (((a & (~d)) & ((d & (~c)) & ((a & (~b)) ^ a))) & ((b & c) & (d | b))) & 
 print(restore(res1))
 print(restore(res2))
 print(restore(res3))
+# ___________________________
+# №2
+# (7 - 7 * x + 4 * x ** 3 - 3 * x ** 6) ** 10
+def factorial(n, s = 1):
+    if n >= 1:
+        s = s * n
+        return factorial(n - 1, s)
+    return s
+
+
+def multinomial(a, b, c, d):
+    return factorial(a + b + c + d) // (factorial(a) * factorial(b) * factorial(c) * factorial(d))
+
+
+for i in range(0, 61, 1):
+    s = 0 # Коэффициент
+    for k in range(0, 11, 1):
+        for m in range(0, 11 - k, 1):
+            for n in range(0, 11 - k - m, 1):
+                l = 10 - k - m - n
+                if l < 0:
+                    continue
+                if k + 3 * m + 6 * n != i:
+                    continue
+                s += multinomial(k, l, n, m) * 7 ** l * (-7) ** k * 4 ** m * (-3) ** n
+    print(s)
