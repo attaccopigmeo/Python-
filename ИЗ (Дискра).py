@@ -7,6 +7,17 @@ def create_set(L):
     return a
 
 
+def restore(a):
+    L = []
+    n = 0
+    while a != 0:
+        has = a % 2
+        if has == 1:
+            L.append(n)
+        a //= 2
+        n += 1
+    return L
+
 A = [1, 2, 5, 9, 14, 17, 19, 23, 25, 26, 27, 28, 30, 34, 35, 39, 41, 42, 43, 44, 45, 49, 50]
 B = [3, 4, 6, 7, 10, 13, 15, 20, 22, 24, 25, 26, 27, 29, 30, 34, 35, 36, 38, 39, 41, 44, 48, 49]
 C = [4, 5, 14, 17, 18, 19, 20, 21, 23, 29, 30, 31, 33, 34, 35, 36, 38, 42, 44, 45]
@@ -15,3 +26,11 @@ a = create_set(A)
 b = create_set(B)
 c = create_set(C)
 d = create_set(D)
+
+res1 = ((a & b) | a) ^ ((((c & a) & (~(b ^ a))) & ((b ^ c) & (~((c | b) ^ a)))) | ((c & (~d)) & (a & d)))
+res2 = (((d ^ c) | a) & ((d & b) & d)) ^ (((c & d) & ((a ^ b) ^ a)) | ((d & b) & ((d | a) & d)))
+res3 = (((a & (~d)) & ((d & (~c)) & ((a & (~b)) ^ a))) & ((b & c) & (d | b))) & (~((c & (~a)) & (~((b & d) ^ b))))
+
+print(restore(res1))
+print(restore(res2))
+print(restore(res3))
