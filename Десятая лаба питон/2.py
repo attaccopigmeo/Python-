@@ -4,19 +4,27 @@
 80 м3. Вывести на экран все кампании и заказы которым для доставки достаточно отправить
 газель.
 """
-import pandas as pd
+import csv
 
-df = pd.read_csv("/Users/kamillasmidt/Python--2/Десятая лаба питон/2.csv")
-print("Возможно доставить с помощью газели:")
-print(df[df["volume"]<=10])
+def find_orders_for_gazel(file_path):
+    print("Компания", "Товар", sep = "\t")
+    with open(file_path, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader: # Обрабатываем каждую строку
+            if int(row["volume"]) <= 10:
+                print(row["nameofcompany"], row["nameofgood"], sep = "\t")
+
+
+file_path = "/Users/kamillasmidt/Python--2/Десятая лаба питон/2.csv"
+find_orders_for_gazel(file_path)
+
 """
-Возможно доставить с помощью газели:
-          nameofcompany nameofgood  volume
-0         Рога и копыта       рога       5
-3   Министерство правды     газеты       7
-12                А Ежи       иглы       8
-14            Мир любви      смута       2
-16        Вселенная игр      покер       5
-18            Мир любви     грабли       8
-19           Супный мир   кастрюли       7
+Компания        Товар
+Рога и копыта   рога
+Мин. правды     газеты
+А Ежи           иглы
+Мир любви       смута
+Вселенная игр   покер
+Мир любви       грабли
+Супный мир      кастрюли
 """

@@ -7,5 +7,5 @@ name = input("Введите имя покупателя: ")
 good = input("Введите наименование товара: ")
 amount = input("Введите кол-во товара: ")
 cost = input("Введите стоимость: ")
-f = open("/Users/kamillasmidt/Python--2/Десятая лаба питон/3.csv","a")
-f.write(f"{date},{name},{good},{amount},{cost}\n")
+f = open("/Users/kamillasmidt/Python--2/Десятая лаба питон/sales.csv","a")
+f.write(f"{date},{name},{good},{amount},{cost}\n") #Вносим полученную информацию по пунктам
