@@ -9,6 +9,7 @@ import pandas as pd
 
 data = pd.read_excel("/Users/kamillasmidt/Python--2/Одиннадцатая лаба питон/2.xlsx", usecols="H,J", header = 1).iloc[289:299]
 print(data)
+# Секторная диаграмма
 plt.pie(data["значение.1"], labels = data["Компонент"])
 plt.title("Морф. состав отходов")
 plt.tight_layout() # Подстраивает размеры объектов
