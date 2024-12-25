@@ -45,5 +45,5 @@ for i in range(5):
     f = open("/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv","a")
     f.write(f"{name},{surname},{average_score}\n")
 
-c = merge_csv_files("/Users/kamillasmidt/Python--2/Десятая лаба питон/students1.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students2.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv", "output_file")
+c = merge_csv_files("/Users/kamillasmidt/Python--2/Десятая лаба питон/students1.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students2.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/output_file.csv")
 print(c)
