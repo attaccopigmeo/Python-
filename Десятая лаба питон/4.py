@@ -11,8 +11,7 @@ def merge_csv_files(input_file1, input_file2, input_file3, output_file):
     try:
         # Создаем и открываем output_file для записи
         with open(output_file, mode='w', newline='', encoding='utf-8') as outfile:
-            writer = None
-
+            writer = csv.writer(outfile)
             for file in input_files:
                 with open(file, mode='r', encoding='utf-8') as infile:
                     reader = csv.reader(infile)
@@ -45,5 +44,5 @@ for i in range(5):
     f = open("/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv","a")
     f.write(f"{name},{surname},{average_score}\n")"""
 
-c = merge_csv_files("/Users/kamillasmidt/Python--2/Десятая лаба питон/students1.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students2.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/output_file.csv")
+c = merge_csv_files("Десятая лаба питон/students1.csv", "Десятая лаба питон/students2.csv", "Десятая лаба питон/students3.csv", "Десятая лаба питон/output_file4.csv")
 print(c)

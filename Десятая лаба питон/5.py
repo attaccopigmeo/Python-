@@ -21,8 +21,8 @@ def compare_product_popularity(file_2022, file_2023, output_file5) :
                 sales_dict[product] += quantity
 
     # Считываем данные из файлов
-    read_sales("/Users/kamillasmidt/Python--2/Десятая лаба питон/2022.csv", sales_2022)
-    read_sales("/Users/kamillasmidt/Python--2/Десятая лаба питон/2023.csv", sales_2023)
+    read_sales("Десятая лаба питон/2022.csv", sales_2022)
+    read_sales("Десятая лаба питон/2023.csv", sales_2023)
 
     # Сравниваем продажи и определяем изменения популярности
     results = []
@@ -34,14 +34,14 @@ def compare_product_popularity(file_2022, file_2023, output_file5) :
         results.append([product, sales_22, sales_23, change])
 
     # Передаем данные в файл output_file5.csv
-    with open("/Users/kamillasmidt/Python--2/Десятая лаба питон/output_file5.csv", mode='w', newline='', encoding='utf-8') as f:
+    with open("Десятая лаба питон/output_file5.csv", mode='w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        writer.writerow(["Product", "/Users/kamillasmidt/Python--2/Десятая лаба питон/2022.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/2023.csv", "Change"])
+        writer.writerow(["Product", "Десятая лаба питон/2022.csv", "Десятая лаба питон/2023.csv", "Change"])
         writer.writerows(results)
 
-    print(f"Comparison results saved to '{"/Users/kamillasmidt/Python--2/Десятая лаба питон/output_file5.csv"}'.")
-file_2022 = "/Users/kamillasmidt/Python--2/Десятая лаба питон/2022.csv"
-file_2023 = "/Users/kamillasmidt/Python--2/Десятая лаба питон/2023.csv"
-output_file5 = "/Users/kamillasmidt/Python--2/Десятая лаба питон/output_file5.csv"
+    print(f"Comparison results saved to \"Десятая лаба питон/output_file5.csv\".")
+file_2022 = "Десятая лаба питон/2022.csv"
+file_2023 = "Десятая лаба питон/2023.csv"
+output_file5 = "Десятая лаба питон/output_file5.csv"
 c = compare_product_popularity(file_2022, file_2023, output_file5)
 print(c)
