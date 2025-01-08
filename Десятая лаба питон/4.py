@@ -24,7 +24,7 @@ def merge_csv_files(input_file1, input_file2, input_file3, output_file):
         print(f"Произошла ошибка: {e}")
 
 
-for i in range(5):
+"""for i in range(5):
     name = input("Введите имя студента: ")
     surname = input("Введите фамилию студента: ")
     average_score = input ("Введите средний балл студента: ")
@@ -43,7 +43,7 @@ for i in range(5):
     surname = input("Введите фамилию студента: ")
     average_score = input ("Введите средний балл студента: ")
     f = open("/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv","a")
-    f.write(f"{name},{surname},{average_score}\n")
+    f.write(f"{name},{surname},{average_score}\n")"""
 
 c = merge_csv_files("/Users/kamillasmidt/Python--2/Десятая лаба питон/students1.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students2.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/students3.csv", "/Users/kamillasmidt/Python--2/Десятая лаба питон/output_file.csv")
 print(c)
