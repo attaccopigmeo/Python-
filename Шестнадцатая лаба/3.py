@@ -41,4 +41,29 @@ class LinkedList:
             current_node = current_node.next 
         current_node.next = new_node
     
-n = int(input("Введите кол-во эл-ов списка"))
+n = int(input("Введите кол-во эл-ов списка: "))
+lst = LinkedList()
+# заполняем список случайными числами от 1 до 10
+for _ in range(n):
+    lst.insertAtEnd(randint(1, 10))
+
+print('Элементы списка:', end=' ')
+cur = lst.head
+while cur is not None:
+    print(cur.data, end=' ')
+    cur = cur.next
+print()
+# создадим перевёрнутый список
+rev_lst = LinkedList()
+# добавляем в начало нового списка элементы исходного по очереди
+# в итоге мы получим перевёрнутый список
+cur = lst.head
+while cur is not None:
+    rev_lst.insertAtBegin(cur.data)
+    cur = cur.next
+# выводим список
+print('Элементы с последнего до первого:', end=' ')
+cur = rev_lst.head
+while cur is not None:
+    print(cur.data, end=' ')
+    cur = cur.next
