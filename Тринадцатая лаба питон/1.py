@@ -7,12 +7,6 @@
 значения весов (в кг), в третьей объемы находок (в куб.см). Вывести так же суммарный вес и
 суммарный объем результата.
 """
-def max(x, y): # максиму из двух эл.
-    if x > y:
-        return x
-    else:
-        return y
-
 f = open("Тринадцатая лаба питон/1.txt", "r")
 N, B = map(int, f.readline().split())
 c = list(map(int, f.readline().split()))
@@ -47,3 +41,51 @@ while dp[i][j] > 0:
     i -= 1
 print("Порядковые номера вещей:", *res)
 print("Суммарные вес и объем вещей:", w, v)
+# Чтение данных из файла (без try)
+file_path = 'Тринадцатая лаба питон/1.txt'
+
+with open(file_path, 'r') as file:
+    lines = file.readlines()
+
+# Парсим первую строку (N и B)
+N, B = map(int, lines[0].split())
+
+# Парсим веса и объемы
+weights = list(map(int, lines[1].split()))
+volumes = list(map(int, lines[2].split()))
+
+# Таблица для динамического программирования
+# dp[w] хранит максимальный объем для веса w
+dp = [[0] * (B + 1) for _ in range(N + 1)]
+picked_items = [[[] for _ in range(B + 1)] for _ in range(N + 1)]
+
+# Заполняем таблицу мемоизации
+for i in range(1, N + 1):  # Для каждого артефакта
+    for w in range(B + 1):  # Для каждого возможного веса
+        # Если текущий артефакт не помещается в оставшийся вес
+        if weights[i - 1] > w:
+            dp[i][w] = dp[i - 1][w]
+            picked_items[i][w] = picked_items[i - 1][w]
+        else:
+            # Оптимальное значение: взять или не взять текущий артефакт
+            without_item = dp[i - 1][w]
+            with_item = dp[i - 1][w - weights[i - 1]] + volumes[i - 1]
+
+            if with_item > without_item:
+                dp[i][w] = with_item
+                picked_items[i][w] = picked_items[i - 1][w - weights[i - 1]] + [i - 1]
+            else:
+                dp[i][w] = without_item
+                picked_items[i][w] = picked_items[i - 1][w]
+
+# Ищем решение с максимальным объемом и весом, близким к B
+best_weight = max(range(B + 1), key=lambda w: dp[N][w])
+best_subset = picked_items[N][best_weight]
+
+# Форматируем результат
+result = {
+    "indices": [i + 1 for i in best_subset],  # Переход к порядковым номерам
+    "total_weight": sum(weights[i] for i in best_subset),
+    "total_volume": dp[N][best_weight],
+}
+print(result)
