@@ -2,8 +2,9 @@
 Дан односвязный линейный список и указатель на голову списка P1. Необходимо
 вывести элементы списка, перечисляя их от последнего к первому.
 """
-from random import randint
+# Старый список выводить, не создавая новый
 
+from random import randint
 
 class Node:
     def __init__(self, data=None, next=None):
@@ -61,7 +62,7 @@ cur = lst.head
 while cur is not None:
     rev_lst.insertAtBegin(cur.data)
     cur = cur.next
-# выводим список
+
 print('Элементы с последнего до первого:', end=' ')
 cur = rev_lst.head
 while cur is not None:

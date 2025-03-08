@@ -44,7 +44,7 @@ class LinkedList:
 
 
 lst = LinkedList()
-with open('Шестнадцатая лаба\\5.txt', 'r') as f:
+with open('Шестнадцатая лаба/5.txt', 'r') as f:
     n = int(f.readline())
     for _ in range(n):
         x = int(f.readline())

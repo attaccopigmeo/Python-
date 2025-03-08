@@ -12,7 +12,7 @@
 
 import pickle
 import pandas as pd
-
+#Основной класс
 class Student:
     def __init__(self, last_name, first_name, grade):
         self.last_name = last_name
@@ -22,7 +22,7 @@ class Student:
     def __repr__(self):
         return f'{self.last_name} {self.first_name}, {self.grade} класс'
 
-
+#Подклассы
 class FirstGradeStudent(Student):
     def __init__(self, last_name, first_name, read_speed):
         super().__init__(last_name, first_name, 1)

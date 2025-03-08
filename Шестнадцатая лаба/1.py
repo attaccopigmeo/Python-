@@ -4,6 +4,7 @@
 элемента стек окажется пустым, то положить A2 = null. После извлечения элемента из стека
 освободить ресурсы, используемые этим элементом, вызвав его метод Dispose.
 """
+# Положить значение A2= None!!!!
 import gc
 from random import randint
 
@@ -54,6 +55,6 @@ stack = Stack()
 for _ in range(n):
     stack.push(randint(1, 10))
 
-print(stack.pop()) # извлекаем вершину и выводим значение
+print("Вершина стека:", stack.pop())
 gc.collect() # вызываем Dispose
-print(stack.head) # выводим ссылку на новую вершину
+print("Ссылка на новую вершину", stack.head)
