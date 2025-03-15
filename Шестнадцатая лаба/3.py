@@ -41,6 +41,12 @@ class LinkedList:
         while(current_node.next): 
             current_node = current_node.next 
         current_node.next = new_node
+
+def printreversed(node):
+    if node is None:
+        return
+    printreversed(node.next)
+    print(node.data, end=' ')
     
 n = int(input("Введите кол-во эл-ов списка: "))
 lst = LinkedList()
@@ -55,16 +61,5 @@ while cur is not None:
     cur = cur.next
 print()
 # создадим перевёрнутый список
-rev_lst = LinkedList()
-# добавляем в начало нового списка элементы исходного по очереди
-# в итоге мы получим перевёрнутый список
-cur = lst.head
-while cur is not None:
-    rev_lst.insertAtBegin(cur.data)
-    cur = cur.next
-
-print('Элементы с последнего до первого:', end=' ')
-cur = rev_lst.head
-while cur is not None:
-    print(cur.data, end=' ')
-    cur = cur.next
+print('Перевернутый список:', end=' ')
+printreversed(lst.head)
