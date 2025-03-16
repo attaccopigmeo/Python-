@@ -25,63 +25,69 @@ class Node:
 
 class IntListB:
     def __init__(self):
-        self.head = None
-        self.tail = None
         self.current = None
-        self.barrier = None
+        self.barrier = Node(None)
 
     def push_front(self, new_data):  
-        new_node = Node(new_data)  
-        new_node.next = self.head 
-        if self.head is not None:
-            self.head.prev = new_node  
-        self.head = new_node
-        if self.tail is None:
-            self.tail = self.head
+        new_node = Node(new_data)
+        new_node.prev = self.barrier
+        if self.barrier.prev is not None:
+            new_node.next = self.barrier.next
+            new_node.next.prev = new_node
+        else:
+            new_node.next = self.barrier
+            self.barrier.prev = new_node
+        self.barrier.next = new_node
+        
     
     def push_back(self, new_data):
-        new_node = Node(new_data)  
-        new_node.prev = self.tail 
-        if self.tail is not None:
-            self.tail.next = new_node
-        self.tail = new_node
-        if self.head is None:
-            self.head = self.tail
-
-    def insert(self, a, lst):
-        if a.prev is None:
-            self.head = lst.head
+        new_node = Node(new_data)
+        new_node.next = self.barrier
+        if self.barrier.next is not None:
+            new_node.prev = self.barrier.prev
+            new_node.prev.next = new_node
         else:
-            a.prev.next = lst.head
-        lst.head.prev = a.prev
-        a.prev = lst.tail
-        lst.tail.next = a
+            new_node.prev = self.barrier
+            self.barrier.next = new_node
+        self.barrier.prev = new_node
 
     def to_first(self):
-        self.current = self.head
+        self.current = self.barrier.next
     
     def to_next(self):
-        self.current = self.current.next
+        if self.current != self.barrier:
+            self.current = self.current.next
 
     def set_data(self, d):
+        if self.current != self.barrier:
+            self.current.data = d
+    
+    def is_barrier(self):
+        return self.current == self.barrier
         
 
 def createlist(n):
-    lst = DoublyLinkedList()
+    lst = IntListB()
     for _ in range(n):
         lst.push_back(randint(1, 10))
     return lst
 
 def printlist(lst):
-    cur = lst.head
-    while cur is not None:
-        print(cur.data, end=" ")
-        cur = cur.next
+    lst.to_first()
+    while not lst.is_barrier():
+        print(lst.current.data, end=' ')
+        lst.to_next()
     print()
 
 if __name__ == '__main__':
     n = int(input("Введете размер списка: "))
     lst = createlist(n)
-    print("Список первый:")
+    print("Список:")
     printlist(lst)
-    
+    lst.to_first()
+    while not lst.is_barrier():
+        lst.set_data(0)
+        lst.to_next()
+        lst.to_next()
+    print("Новый список:")
+    printlist(lst)
