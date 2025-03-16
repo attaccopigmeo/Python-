@@ -57,4 +57,5 @@ for _ in range(n):
 
 print("Вершина стека:", stack.pop())
 gc.collect() # вызываем Dispose
+A2 = stack.head
 print("Ссылка на новую вершину", stack.head)

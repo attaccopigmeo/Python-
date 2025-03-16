@@ -76,7 +76,7 @@ for year in range(2000, 2011):
             min_month = month + 1
     
     if min_month != 0:
-        print(f"В году {year} клиент {client_id} меньше всего занимался в месяц {month} - всего {min_visits} часов.")
+        print(f"В году {year} клиент {client_id} меньше всего занимался в месяц {min_month} - всего {min_visits} часов.")
         found_data = True
 
 if not found_data:

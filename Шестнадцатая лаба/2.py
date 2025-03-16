@@ -45,6 +45,8 @@ class Queue():
         else:
             poppednode = self.head
             self.head = self.head.next
+            if self.head is None:
+                self.tail = None
             poppednode.next = None
             return poppednode.data
     
