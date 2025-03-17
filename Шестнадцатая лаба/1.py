@@ -49,13 +49,13 @@ class Stack:
             return self.head.data
 
 
-n = int(input("Введите кол-во эл-ов списка: "))
-stack = Stack()
-# заполняем список случайными числами от 1 до 10
-for _ in range(n):
-    stack.push(randint(1, 10))
-
-print("Вершина стека:", stack.pop())
-gc.collect() # вызываем Dispose
-A2 = stack.head
-print("Ссылка на новую вершину", stack.head)
+if __name__ == '__main__':
+    n = int(input("Введите кол-во эл-ов списка: "))
+    stack = Stack()
+    # заполняем список случайными числами от 1 до 10
+    for _ in range(n):
+        stack.push(randint(1, 10))
+    print("Вершина стека:", stack.pop())
+    gc.collect() # вызываем Dispose
+    A2 = stack.head
+    print("Ссылка на новую вершину", stack.head)

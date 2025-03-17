@@ -6,6 +6,7 @@
 
 from random import randint
 
+
 class Node:
     def __init__(self, data=None, next=None):
         self.data = data
@@ -13,6 +14,7 @@ class Node:
         
     def __str__(self):
         return str(self.data)
+    
     
 class LinkedList: 
     def __init__ (self): 
@@ -47,19 +49,20 @@ def printreversed(node):
         return
     printreversed(node.next)
     print(node.data, end=' ')
-    
-n = int(input("Введите кол-во эл-ов списка: "))
-lst = LinkedList()
-# заполняем список случайными числами от 1 до 10
-for _ in range(n):
-    lst.insertAtEnd(randint(1, 10))
 
-print('Элементы списка:', end=' ')
-cur = lst.head
-while cur is not None:
-    print(cur.data, end=' ')
-    cur = cur.next
-print()
-# создадим перевёрнутый список
-print('Перевернутый список:', end=' ')
-printreversed(lst.head)
+
+if __name__ == '__main__':
+    n = int(input("Введите кол-во эл-ов списка: "))
+    lst = LinkedList()
+    # заполняем список случайными числами от 1 до 10
+    for _ in range(n):
+        lst.insertAtEnd(randint(1, 10))
+    print('Элементы списка:', end=' ')
+    cur = lst.head
+    while cur is not None:
+        print(cur.data, end=' ')
+        cur = cur.next
+    print()
+    # создадим перевёрнутый список
+    print('Перевернутый список:', end=' ')
+    printreversed(lst.head)

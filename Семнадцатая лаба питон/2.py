@@ -63,11 +63,11 @@ def printlist(lst):
     print()
 
 if __name__ == '__main__':
-    n = int(input("Введете размер первого списка: "))
+    n = int(input("Введите размер первого списка: "))
     lst1 = createlist(n)
     print("Список первый:")
     printlist(lst1)
-    m = int(input("Введете размер второго списка: "))
+    m = int(input("Введите размер второго списка: "))
     lst2 = createlist(m)
     print("Список второй:")
     printlist(lst2)

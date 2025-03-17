@@ -19,6 +19,7 @@ None
 Сслыка на голову: None
 Сслыка на хвост: <__main__.Node object at 0x10447d810>
 """
+
 import gc
 from random import randint
 
@@ -27,6 +28,7 @@ class Node():
     def __init__(self, data=None, next=None):
         self.data = data
         self.next = next
+
 
 class Queue():
     def __init__(self):
@@ -49,7 +51,6 @@ class Queue():
                 self.tail = None
             poppednode.next = None
             return poppednode.data
-    
     # метод Dequeue согласно условию
     def dequeue(self):
         value = self.pop() # извлекаем элемент
@@ -73,15 +74,14 @@ class Queue():
             current_node = current_node.next
 
 
-n = int(input("Введите кол-во эл-ов очереди: "))
-q = Queue()
-# заполняем очередь случайными числами от 1 до 10
-for _ in range(n):
-    q.push(randint(1, 10))
-
-print('5 элементов:')
-for _ in range(5):
-    print(q.dequeue()) # делаем Dequeue 5 раз
-
-print('Сслыка на голову:', q.head)
-print('Сслыка на хвост:', q.tail)
+if __name__ == '__main__':
+    n = int(input("Введите кол-во эл-ов очереди: "))
+    q = Queue()
+    # заполняем очередь случайными числами от 1 до 10
+    for _ in range(n):
+        q.push(randint(1, 10))
+    print('5 элементов:')
+    for _ in range(5):
+        print(q.dequeue()) # делаем Dequeue 5 раз
+    print('Сслыка на голову:', q.head)
+    print('Сслыка на хвост:', q.tail)
