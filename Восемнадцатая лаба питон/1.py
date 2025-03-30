@@ -8,55 +8,60 @@
 первом ходе каждый игрок может брать камень из любой кучки). Ходы игроки делают по
 очереди. Проигрывает тот, кто не может сделать ход.
 """
-# интерфейс через tkinter, наличие минимум 2-х классов в каждой задаче, залить все задачи за этот сем на online.psu
-
-PLAYER = 0
-COMPUTER = 1
 
 
 class Game():
     def __init__(self, rocks, players):
         self.rocks = rocks
-        self.last_move = [None] * players
+        self.players = players
         
-    def make_move(self, player, move):
-        if move < 0 or move >= len(self.rocks):
-            return False
-        if move == self.last_move[player]:
-            return False
-        if self.rocks[move] == 0:
-            return False
-        self.rocks[move] -= 1
-        self.last_move[player] = move
-        return True
-    
+    def game_loop(self):
+        while True:
+            for player in self.players:
+                if self.is_end(player):
+                    return player.name
+                player.make_move(self)
+                print("Текущее кол-во камней:", *self.rocks)
+
     def is_end(self, player):
         for i in range(len(self.rocks)):
-            if i == self.last_move[player]:
+            if i == player.last_move:
                 continue
             if self.rocks[i] > 0:
                 return False
         return True
+    
+
+class Player():
+    def __init__(self):
+        self.name = 'Игрок'
+        self.last_move = None
+    
+    def make_move(self,game):
+        while True:
+            move = int(input("Введите номер кучки, откуда хотите забрать камень: "))
+            if move == self.last_move or game.rocks[move] == 0:
+                print("Такой ход невозможен, попробуйте еще раз.")
+                continue
+            game.rocks[move] -= 1
+            self.last_move = move
+            break
+
+
+class Computer():
+    def __init__(self):
+        self.name = 'Компьютер'
+        self.last_move = None
+    
+    def make_move(self,game):
+        for i in range(len(game.rocks)): #проходим по кучкам камней
+            if self.last_move != i and game.rocks[i] > 0:
+                game.rocks[i] -= 1
+                self.last_move = i
+                break
 
     
 if __name__ == '__main__':
-    game = Game([10, 11, 12], 2)
-    while True:
-        print("Текущее кол-во камней:", *game.rocks)
-        move = int(input("Введите номер кучки, откуда хотите забрать камень: "))
-        success = game.make_move(PLAYER, move)
-        if not success:
-            print("Такой ход невозможен, попробуйте еще раз.")
-            continue
-        if game.is_end(COMPUTER):
-            print("Вы победили.")
-            break
-        else:
-            print("Текущее кол-во камней:", *game.rocks)
-        for i in range(len(game.rocks)):
-            if game.last_move[COMPUTER] != i and game.rocks[i] > 0:
-                game.make_move(COMPUTER, i)
-                break
-        if game.is_end(PLAYER):
-            print("Компьютер победил.")
-            break
+    game = Game([10, 11, 12], [Player(), Computer()])
+    loser = game.game_loop()
+    print(loser, "проиграл.")
