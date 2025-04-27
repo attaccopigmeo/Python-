@@ -8,3 +8,47 @@
 такие маршруты в лексикографическом порядке. Маршрут задается перечислением
 номеров городов, нумерация городов идет с 1. Если таких маршрутов нет, выведите число
 (-1)."""
+
+
+# Алгоритм поиска в глубину
+# Возвращает список маршрутов
+def dfs(n, adj_matrix, k1, k2, l, cur = None, dist = 0):
+    # по умолчанию cur = k1
+    if cur is None:
+        cur = k1
+    # условие остановки рекурсии: достигли K2 за L пересадок
+    if cur == k2 and dist == l:
+        return [[k2 + 1]] # возвращаем один маршрут из текущего-конечного элемента
+    if dist > l:
+        return [] # если сделали больше L пересадок, маршрут не подходит, не возвращаем ничего
+    routes = []
+    # перебираем все вершины
+    for j in range(n):
+        if adj_matrix[cur][j] == '0':
+            continue
+        # если нашлось ребро - пробуем пройти по нему и построить маршруты
+        new_routes = dfs(n, adj_matrix, k1, k2, l, j, dist + 1)
+        for new_route in new_routes:
+            routes.append([cur + 1] + new_route) # добавляем к каждому маршруту в начало текущий элемент и добавляем маршрут в список
+    return routes
+
+
+filename = input('Введите FileName1: ')
+f1 = open('Двадцать вторая лаба/' + filename, 'r')
+adj_matrix = []
+n = int(f1.readline())
+for row in f1:
+    adj_matrix.append(list(row.split()))
+f1.close()
+
+l = int(input('Введите нужное число пересадок L: '))
+k1 = int(input('Введите начальный город K1: '))
+k2 = int(input('Введите конечный город K2: '))
+
+routes = dfs(n, adj_matrix, k1 - 1, k2 - 1, l)
+
+filename = input('Введите FileName2: ')
+f2 = open('Двадцать вторая лаба/' + filename, 'w')
+f2.write(f'{len(routes)}\n')
+f2.writelines([' '.join(map(str, route)) + '\n' for route in routes])
+f2.close()
