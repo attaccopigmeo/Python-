@@ -7,6 +7,65 @@
 номера таких городов в порядке возрастания. Нумерация городов начинается с 1. Если
 таких городов нет, выведите число (-1)."""
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def draw_adjacency_matrix(adj_matrix):
+    """
+    Рисует граф по матрице смежности, используя только matplotlib.
+    
+    Параметры:
+    adj_matrix : list of list или numpy.ndarray
+        Квадратная матрица смежности (0 и 1 для невзвешенного графа)
+    """
+    if len(adj_matrix) != len(adj_matrix[0]):
+        raise ValueError("Матрица смежности должна быть квадратной")
+    
+    n = len(adj_matrix)  # Количество вершин
+    G = np.array(adj_matrix)
+    
+    # Создаем фигуру и оси
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.set_aspect('equal')
+    ax.axis('off')
+    
+    # Располагаем вершины на окружности
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    radius = 5
+    x = radius * np.cos(angles)
+    y = radius * np.sin(angles)
+    
+    # Подписываем вершины
+    for i in range(n):
+        ax.text(x[i], y[i], str(i), ha='center', va='center', fontsize=12)
+    
+    # Рисуем рёбра (с учётом направленности)
+    arrow_style = dict(arrowstyle='-', color='gray', lw=1.5)
+    
+    for i in range(n):
+        for j in range(n):
+            if G[i, j] != '0':  # Если есть ребро из i в j
+                dx = x[j] - x[i]
+                dy = y[j] - y[i]
+                
+                # Немного укорачиваем стрелку, чтобы она не перекрывала вершину
+                start_x = x[i]
+                start_y = y[i]
+                end_x = x[j]
+                end_y = y[j]
+                
+                # Рисуем стрелку
+                ax.annotate("", xy=(end_x, end_y), xytext=(start_x, start_y), 
+                            arrowprops=arrow_style)
+    
+    # Рисуем вершины (узлы)
+    ax.scatter(x, y, s=500, c='skyblue', edgecolors='black', linewidths=1.5)
+    
+    plt.title("Граф по матрице смежности", pad=20)
+    plt.tight_layout()
+    plt.show()
+
 
 filename = input('Введите FileName: ')
 f = open('Двадцать вторая лаба/' + filename, 'r')
@@ -15,6 +74,8 @@ n = int(f.readline())
 for row in f:
     adj_matrix.append(list(row.split()))
 f.close()
+
+draw_adjacency_matrix(adj_matrix)
 
 l = int(input('Введите максимальное число пересадок L: '))
 k = int(input('Введите начальный город K: '))
