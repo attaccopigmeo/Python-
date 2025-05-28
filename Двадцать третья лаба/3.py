@@ -10,6 +10,29 @@ class Node:
         self.right = None
 
 
+class Tree:
+    def __init__(self, root):
+        self.root = root
+    
+    # второе максимальное значение лежит в предке самого правого элемента
+    # если у него нет предка, переходим влево, а затем вправо до упора
+    def find_second_max(self):
+        # сначала спускаемся вправо до упора
+        cur = self.root
+        parent = None
+        while cur.right is not None:
+            parent = cur
+            cur = cur.right
+        # если предок есть, то возвращаем его значение:
+        if parent is not None:
+            return parent.data
+        # иначе спускаемся влево, а затем вправо до упора
+        cur = cur.left
+        while cur.right is not None:
+            cur = cur.right
+        return cur.data
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -59,36 +82,17 @@ def plot_binary_tree(root, ax=None, x=0, y=0, dx=1.0, dy=1.0, depth=1):
     
     return ax
 
-def draw_binary_tree(root):
+def draw_binary_tree(tree):
     """Основная функция для отрисовки дерева."""
     fig, ax = plt.subplots(figsize=(20, 10))
     ax.set_aspect('equal')
     ax.axis('off')
     
-    plot_binary_tree(root, ax, x=0, y=0, dx=20.0, dy=1.0)
+    plot_binary_tree(tree.root, ax, x=0, y=0, dx=20.0, dy=1.0)
     
     plt.title("Бинарное дерево", pad=20)
     plt.tight_layout()
     plt.show()
-
-
-# второе максимальное значение лежит в предке самого правого элемента
-# если у него нет предка, переходим влево, а затем вправо до упора
-def find_second_max(root):
-    # сначала спускаемся вправо до упора
-    cur = root
-    parent = None
-    while cur.right is not None:
-        parent = cur
-        cur = cur.right
-    # если предок есть, то возвращаем его значение:
-    if parent is not None:
-        return parent.data
-    # иначе спускаемся влево, а затем вправо до упора
-    cur = cur.left
-    while cur.right is not None:
-        cur = cur.right
-    return cur.data
 
 
 if __name__ == '__main__':
@@ -101,8 +105,8 @@ if __name__ == '__main__':
             continue
         node.left = nodes[2 * i + 1]
         node.right = nodes[2 * i + 2]
-    p1 = nodes[0]
+    tree = Tree(nodes[0])
     del nodes
     # отныне доступно только p1, согласно условию
-    draw_binary_tree(p1)
-    print('Второе максимальное значение:', find_second_max(p1))
+    draw_binary_tree(tree)
+    print('Второе максимальное значение:', tree.find_second_max())
