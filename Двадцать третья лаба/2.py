@@ -10,6 +10,21 @@ class Node:
         self.right = None
 
 
+class Tree:
+    def __init__(self, root):
+        self.root = root
+    
+    def print_infix(self):
+        self._print_infix(self.root)
+    
+    def _print_infix(self, p):
+        if p is None:
+            return
+        self._print_infix(p.left)
+        print(p.data, end=' ')
+        self._print_infix(p.right)
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -59,13 +74,13 @@ def plot_binary_tree(root, ax=None, x=0, y=0, dx=1.0, dy=1.0, depth=1):
     
     return ax
 
-def draw_binary_tree(root):
+def draw_binary_tree(tree):
     """Основная функция для отрисовки дерева."""
     fig, ax = plt.subplots(figsize=(20, 10))
     ax.set_aspect('equal')
     ax.axis('off')
     
-    plot_binary_tree(root, ax, x=0, y=0, dx=20.0, dy=1.0)
+    plot_binary_tree(tree.root, ax, x=0, y=0, dx=20.0, dy=1.0)
     
     plt.title("Бинарное дерево", pad=20)
     plt.tight_layout()
@@ -100,7 +115,8 @@ if __name__ == '__main__':
     root = None
     for item in arr:
         root = position_item(root, item)
-    draw_binary_tree(root)
+    tree = Tree(root)
+    draw_binary_tree(tree)
     print('Отсортированный массив:', end=' ')
-    print_infix(root)
+    tree.print_infix()
     print() # чтобы завершить строку

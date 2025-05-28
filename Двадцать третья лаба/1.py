@@ -8,6 +8,11 @@ class Node:
         self.right = None
 
 
+class Tree:
+    def __init__(self, root):
+        self.root = root
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -57,13 +62,13 @@ def plot_binary_tree(root, ax=None, x=0, y=0, dx=1.0, dy=1.0, depth=1):
     
     return ax
 
-def draw_binary_tree(root):
+def draw_binary_tree(tree):
     """Основная функция для отрисовки дерева."""
     fig, ax = plt.subplots(figsize=(20, 10))
     ax.set_aspect('equal')
     ax.axis('off')
     
-    plot_binary_tree(root, ax, x=0, y=0, dx=20.0, dy=1.0)
+    plot_binary_tree(tree.root, ax, x=0, y=0, dx=20.0, dy=1.0)
     
     plt.title("Бинарное дерево", pad=20)
     plt.tight_layout()
@@ -92,8 +97,8 @@ if __name__ == '__main__':
             continue
         node.left = nodes[2 * i + 1]
         node.right = nodes[2 * i + 2]
-    p1 = nodes[0]
+    tree = Tree(nodes[0])
     del nodes
     # отныне доступно только p1, согласно условию
-    draw_binary_tree(p1)
-    print_leaves(p1)
+    draw_binary_tree(tree)
+    print_leaves(tree.root)
