@@ -14,6 +14,29 @@ class Node:
         self.right = None # оно же self.next
 
 
+class ListTree:
+    def __init__(self, head):
+        self.head = head
+    
+    def print_list(self):
+        cur = self.head
+        while cur is not None:
+            print(cur.data, end=' ')
+            cur = cur.right
+        print()
+    
+    def print_tree(self):
+        queue = [self.head]
+        while len(queue) > 0:
+            cur = queue[0]
+            print(cur.data, end=' ')
+            if cur.left is not None:
+                queue.append(cur.left)
+            if cur.right is not None:
+                queue.append(cur.right)
+            queue = queue[1:]
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -63,13 +86,13 @@ def plot_binary_tree(root, ax=None, x=0, y=0, dx=1.0, dy=1.0, depth=1):
     
     return ax
 
-def draw_binary_tree(root):
+def draw_binary_tree(tree):
     """Основная функция для отрисовки дерева."""
     fig, ax = plt.subplots(figsize=(20, 10))
     ax.set_aspect('equal')
     ax.axis('off')
     
-    plot_binary_tree(root, ax, x=0, y=0, dx=20.0, dy=1.0)
+    plot_binary_tree(tree.head, ax, x=0, y=0, dx=20.0, dy=1.0)
     
     plt.title("Бинарное дерево", pad=20)
     plt.tight_layout()
@@ -102,18 +125,6 @@ def transform(head):
     return mid
 
 
-def print_tree(root):
-    queue = [root]
-    while len(queue) > 0:
-        cur = queue[0]
-        print(cur.data, end=' ')
-        if cur.left is not None:
-            queue.append(cur.left)
-        if cur.right is not None:
-            queue.append(cur.right)
-        queue = queue[1:]
-
-
 if __name__ == '__main__':
     n = int(input('Введите длину списка: '))
     lst = Node(randint(1, 10))
@@ -123,15 +134,12 @@ if __name__ == '__main__':
         lst.left = new_node
         lst = new_node
     
+    lst = ListTree(lst)
     print('Исходный список:', end=' ')
-    cur = lst
-    while cur is not None:
-        print(cur.data, end=' ')
-        cur = cur.right
-    print()
+    lst.print_list()
 
-    tree = transform(lst)
+    tree = ListTree(transform(lst.head))
     print('Получившееся дерево:', end=' ')
-    print_tree(tree)
+    tree.print_tree()
     print()
     draw_binary_tree(tree)
