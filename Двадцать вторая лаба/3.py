@@ -71,7 +71,7 @@ def draw_adjacency_matrix(adj_matrix):
 
 # Алгоритм поиска в глубину
 # Возвращает список маршрутов
-def dfs(n, adj_matrix, k1, k2, l, cur = None, dist = 0):
+def dfs(n, adj_matrix, k1, k2, l, cur = None, dist = -1):
     # по умолчанию cur = k1
     if cur is None:
         cur = k1
