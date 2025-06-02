@@ -10,6 +10,7 @@ class Node:
         self.data = data
         self.left = None
         self.right = None
+        self.camera = False
 
 
 class Tree:
@@ -39,7 +40,7 @@ def plot_binary_tree(root, ax=None, x=0, y=0, dx=1.0, dy=1.0, depth=1):
         ax.axis('off')
     
     # Рисуем текущий узел
-    ax.scatter(x, y, s=500, c='skyblue', edgecolors='black', linewidths=1.5)
+    ax.scatter(x, y, s=500, c='green' if root.camera else 'red', edgecolors='black', linewidths=1.5)
     ax.text(x, y, str(root.data), ha='center', va='center', fontsize=12)
     
     # Рекурсивно рисуем левое поддерево
@@ -98,6 +99,7 @@ def find_solution(node):
         if left_status == NOT_COVERED or right_status == NOT_COVERED:
             cameras += 1
             status = CAMERA
+            node.camera = True
         # если хотя бы в одном из потомков имеется камера, узел покрыт
         elif left_status == CAMERA or right_status == CAMERA:
             status = COVERED_BY_CHILD
@@ -121,9 +123,9 @@ if __name__ == '__main__':
     tree = Tree(nodes[0])
     del nodes
 
-    draw_binary_tree(tree)
-
     root_status, cameras = find_solution(tree.root)
     if root_status == NOT_COVERED:
         cameras += 1 # нужно покрыть корень
+        tree.root.camera = True
+    draw_binary_tree(tree)
     print('Требуемое количество камер:', cameras)
