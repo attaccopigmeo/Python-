@@ -97,7 +97,7 @@ class Tree:
         if node.left is not None:
             cur = node.left
             while cur is not None:
-                self.stack.append(cur)
+                self.stack.append(cur) # добавляем элемент в стек при переходе к потомку
                 cur = cur.right
         return node.data
 
