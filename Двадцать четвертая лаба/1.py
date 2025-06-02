@@ -13,8 +13,7 @@ class Node:
         self.left = None # оно же self.prev
         self.right = None # оно же self.next
 
-
-class ListTree:
+class List:
     def __init__(self, head):
         self.head = head
     
@@ -24,6 +23,11 @@ class ListTree:
             print(cur.data, end=' ')
             cur = cur.right
         print()
+
+
+class Tree:
+    def __init__(self, head):
+        self.head = head
     
     def print_tree(self):
         queue = [self.head]
@@ -134,11 +138,11 @@ if __name__ == '__main__':
         lst.left = new_node
         lst = new_node
     
-    lst = ListTree(lst)
+    lst = List(lst)
     print('Исходный список:', end=' ')
     lst.print_list()
 
-    tree = ListTree(transform(lst.head))
+    tree = Tree(transform(lst.head))
     print('Получившееся дерево:', end=' ')
     tree.print_tree()
     print()
