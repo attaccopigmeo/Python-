@@ -20,6 +20,8 @@ class HuffmanTree:
 
     def encode_char(self, ch):
         encoding = ''
+        # Спускаемся по дереву, пока не дойдём до листа
+        # Если спустились влево, дописываем к коду 0, иначе 1
         cur = self.root
         while cur.left or cur.right:
             if cur.left is not None and ch in cur.left.chars:
@@ -31,18 +33,23 @@ class HuffmanTree:
         return encoding
 
     def encode_text(self, text):
+        # для кодирования текста кодируем каждый символ
         encoding = ''
         for ch in text:
             encoding += self.encode_char(ch)
         return encoding
     
     def get_char_encodings(self):
+        # получаем коды всех символов
         encodings = {}
         for ch in self.freq:
             encodings[ch] = self.encode_char(ch)
         return encodings
+    
+    # с нижнего подчёркивания начинаются методы, которые доступны только внутри класса
 
     def _count_freq(self, msg):
+        # Подсчитываем частоты каждого символа
         self.freq = {}
         for ch in msg:
             if ch in self.freq:
@@ -53,8 +60,13 @@ class HuffmanTree:
 
     def _make_tree(self):
         nodes = []
+        # Создаём листья
         for ch in self.freq:
             nodes.append(Node(ch, self.freq[ch]))
+        # Далее для двух узлов с наименьшей частотой создаём новый узел,
+        # потомками которого будут эти узлы
+        # Частота этого узла равна сумме частот двух узлов
+        # Так повторяем, пока не останется один узел без предка - он будет корнем
         while len(nodes) > 1:
             nodes.sort(key=lambda x: x.freq)
             node1 = nodes.pop(0)
