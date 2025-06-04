@@ -111,7 +111,7 @@ def find_solution(node):
 
 
 if __name__ == '__main__':
-    with open('Двадцать третья лаба/1.txt', 'r') as f:
+    with open('Двадцать четвертая лаба/1.txt', 'r') as f:
         nodes = [(Node(int(x)) if x != '0' else None) for x in f.readline().split()]
     for i, node in enumerate(nodes):
         if node is None:
