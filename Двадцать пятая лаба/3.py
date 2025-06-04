@@ -4,6 +4,7 @@
 
 class ColumnarTranspositionCipher:
     def __init__(self, keyword):
+        # при кодировании столбцы перестраиваются в порядке, соответствующем алфавитному порядку букв кодового слова
         self.key = sorted([(ch, i) for i, ch in enumerate(keyword.upper())])
 
     def encode(self, text):

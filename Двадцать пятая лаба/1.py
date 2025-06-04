@@ -39,7 +39,43 @@ def hamming_code(data):
     
     return encoded
 
+def hamming_correct(data):
+    n = len(data)
+    m = 0
+    bits = []
+    # Находим количество контрольных битов: 2^m >= m + n + 1
+    while 2**m < m + n + 1:
+        m += 1
+        bits.append(m)
+
+    # удаляем контрольные биты, чтобы произвести кодирование повторно
+    data_to_recode = data
+    bits.reverse()
+    for bit in bits:
+        data_to_recode = data_to_recode[:bit] + data_to_recode[(bit + 1):]
+    encoding = hamming_code(data_to_recode)
+    # позиция ошибочного бита определяется суммой номеров позиций контрольных битов
+    # несовпадающих в исходном сообщении и закодированном вновь
+    error_pos = 0
+    for i in range(m):
+        pos = 2 ** i - 1
+        if data[pos] != encoding[pos]:
+            error_pos += pos + 1
+    if error_pos == 0:
+        return None, data_to_recode
+    error_pos -= 1
+    # исправляем ошибочный бит
+    data_corr = data[:error_pos] + ([1] if data[error_pos] == 0 else [0]) + data[(error_pos + 1):]
+    # удаляем контрольные биты
+    data_to_recode = data_corr
+    bits.reverse()
+    for bit in bits:
+        data_to_recode = data_to_recode[:bit] + data_to_recode[(bit + 1):]
+    return error_pos + 1, data_to_recode
+
 
 data = list(map(int, input("Введите сообщение: ")))
-encoded = hamming_code(data)
-print(*encoded, sep='')
+error_pos, decoded = hamming_correct(data)
+print('Позиция ошибки:', error_pos)
+print('Декодированное сообщение: ', *decoded, sep='')
+print('Код Хэмминга исходного сообщения: ', *hamming_code(decoded), sep='')
