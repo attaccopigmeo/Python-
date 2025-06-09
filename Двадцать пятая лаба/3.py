@@ -9,11 +9,11 @@ class ColumnarTranspositionCipher:
 
     def encode(self, text):
         cipher = ''
-        for _, pos in self.key:
-            for i in range(pos, len(text), len(self.key)):
+        for _, pos in self.key: # перебор позиций столбцов в алфавитном порядке
+            for i in range(pos, len(text), len(self.key)): # берем символы через длину ключа, начиная с позиции pos
                 cipher += text[i]
         return cipher
-    
+    # заполняем table в порядке колонн, используя тот же порядок, что и при шифровке
     def decode(self, cipher):
         table = ['\0'] * len(cipher)
         j = 0
