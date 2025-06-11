@@ -18,3 +18,12 @@
     - положительное целое число
     минут к времени.
     + Time t – сложить два времени"""
+
+class Time:
+    def __init__(self, time):
+        self.hours, self.minutes = [int(i) for i in time.split(':')]
+    
+    def __add__(self, other):
+        hours, minutes = divmod(self.minutes + other.minutes, 60)
+        hours = (hours + self.hours + other.hours) % 24
+        return self.__class__(str(hours) + ':' + str(minutes))
