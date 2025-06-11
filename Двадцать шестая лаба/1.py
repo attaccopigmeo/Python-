@@ -65,7 +65,7 @@ def get_label(value):
     return REVERSE_CODES.get(value, str(value))
 
 
-# рисование дерева
+# Рисование дерева
 def draw_tree(root):
     def _get_positions(node, depth=0, pos_dict={}, x=0):
         """Рекурсивно вычисляет позицию узлов для рисования."""
@@ -116,7 +116,7 @@ def draw_tree(root):
     plt.show()
 
 
-# чтение и обработка
+# Чтение и обработка
 def process_expression_file(filename):
     with open(filename, 'r') as file:
         tokens = file.read().strip().split()

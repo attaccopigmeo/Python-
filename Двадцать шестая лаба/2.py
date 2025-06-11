@@ -16,20 +16,20 @@
 import re
 import operator
 
-
 class Node:
     def __init__(self, value, left=None, right=None):
-        self.value = value  # string: оператор, число или переменная
+        self.value = value  # значение узла: число, переменная или оператор
         self.left = left
         self.right = right
 
     def is_leaf(self):
+        # Узел является листом, если у него нет потомков
         return self.left is None and self.right is None
 
     def __repr__(self):
         return f'Node({self.value})'
 
-# Приоритеты операторов
+# Приоритеты операторов для преобразования выражения
 PRECEDENCE = {
     '+': 1,
     '-': 1,
@@ -39,42 +39,42 @@ PRECEDENCE = {
     '^': 3,
 }
 
-# Левоассоциативность (все кроме ^)
+# Ассоциативность операторов (все кроме ^ — левоассоциативные)
 LEFT_ASSOC = {
     '+': True,
     '-': True,
     '*': True,
     '/': True,
     '%': True,
-    '^': False,
+    '^': False, # возведение в степень — правоассоциативное
 }
 
-# Поддерживаемые операторы для вычисления
+# Операторы и соответствующие функции python
 OPERATORS = {
     '+': operator.add,
     '-': operator.sub,
     '*': operator.mul,
-    '/': operator.floordiv,
+    '/': operator.floordiv, # целочисленное деление
     '%': operator.mod,
     '^': operator.pow,
 }
 
-
-# Лексер: преобразуем в токены
+# Лексический анализ: разбиваем строку на токены
 def tokenize(expression):
     token_pattern = r'\d+|[a-zA-Z]+|[\+\-\*/\^\%\(\)]'
     return re.findall(token_pattern, expression)
 
-
-# Преобразуем инфикс в постфикс (Shunting Yard)
+# Преобразование инфиксного выражения в постфиксное (обратная польская запись)
 def infix_to_postfix(tokens):
-    output = []
-    stack = []
+    output = []  # выходной список
+    stack = []   # стек операторов
 
     for token in tokens:
         if token.isdigit() or token == 'x':
+            # Операнды идут сразу в выход
             output.append(token)
         elif token in PRECEDENCE:
+            # Обработка операторов согласно приоритетам и ассоциативности
             while (stack and stack[-1] != '(' and
                    (PRECEDENCE[stack[-1]] > PRECEDENCE[token] or
                     (PRECEDENCE[stack[-1]] == PRECEDENCE[token] and LEFT_ASSOC.get(token, True)))):
@@ -83,56 +83,64 @@ def infix_to_postfix(tokens):
         elif token == '(':
             stack.append(token)
         elif token == ')':
+            # Извлекаем операторы до соответствующей открывающей скобки
             while stack and stack[-1] != '(':
                 output.append(stack.pop())
-            stack.pop()  # Убираем '('
+            stack.pop()  # удаляем '('
 
+    # Оставшиеся операторы в стек добавляем в конец
     while stack:
         output.append(stack.pop())
 
     return output
 
-
-# Построение дерева из постфиксной записи
+# Построение дерева выражения из постфиксной записи
 def build_tree(postfix_tokens):
     stack = []
 
     for token in postfix_tokens:
         if token in OPERATORS:
+            # Для оператора извлекаем два операнда и создаём узел
             right = stack.pop()
             left = stack.pop()
             stack.append(Node(token, left, right))
         else:
+            # Операнд — лист дерева
             stack.append(Node(token))
 
+    # Остался один элемент — корень дерева
     return stack[0]
 
-
-# Вычисление дерева
+# Рекурсивное вычисление значения выражения
 def evaluate_tree(node, x_value):
     if node.value == 'x':
         return x_value
     if node.value.isdigit():
         return int(node.value)
+
+    # Рекурсивно вычисляем левое и правое поддерево
     left_val = evaluate_tree(node.left, x_value)
     right_val = evaluate_tree(node.right, x_value)
+
+    # Применяем оператор к значениям
     return OPERATORS[node.value](left_val, right_val)
 
-
-# Преобразование x*A -> A*x
+# Трансформация дерева: заменяем x*A на A*x
 def transform_tree(node):
     if node is None or node.is_leaf():
         return node
+
+    # Рекурсивное применение к поддеревьям
     node.left = transform_tree(node.left)
     node.right = transform_tree(node.right)
 
-    # Ищем поддеревья вида x * A -> A * x
+    # Если найдено поддерево вида x * A, меняем местами
     if node.value == '*' and node.left.value == 'x' and node.right.value != 'x':
         node.left, node.right = node.right, node.left
+
     return node
 
-
-# Вывод дерева на бок в файл
+# Печать дерева в файл: визуализируем дерево на боку
 def print_tree_sideways(node, file, indent=0):
     if node is None:
         return
@@ -140,28 +148,25 @@ def print_tree_sideways(node, file, indent=0):
     file.write(' ' * indent + f'{node.value:>4}\n')
     print_tree_sideways(node.left, file, indent + 4)
 
-
 def process_expression(FN1, FN2, x_value):
+    # Читаем выражение из файла
     with open(FN1, 'r') as f:
         expression = f.read().strip()
 
-    # Токенизация -> Постфикс -> Дерево
     tokens = tokenize(expression)
+
     postfix = infix_to_postfix(tokens)
+
     root = build_tree(postfix)
 
-    # Вычисление
     result = evaluate_tree(root, x_value)
 
-    # Преобразование дерева
     root = transform_tree(root)
 
-    # Запись результата и дерева
     with open(FN2, 'w') as f:
         f.write(f'Результат выражения при x = {x_value}: {result}\n\n')
         f.write('Дерево выражения:\n\n')
         print_tree_sideways(root, f)
-
 
 if __name__ == "__main__":
     process_expression('Двадцать шестая лаба/FN1.txt', 'Двадцать шестая лаба/FN2.txt', x_value=4)
